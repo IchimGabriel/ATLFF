@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ATLFF.Core.Model
 {
-    class City
+    public class City
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -14,9 +14,9 @@ namespace ATLFF.Core.Model
         [JsonProperty("lat")]
         public float Latitude { get; set; }
         [JsonProperty("lng")]
-        public float Longitude { get; set; }
+        public float Longitude{ get; set; }
         [JsonProperty("iso")]
-        public string Country { get; set; }     // iso3 - IRL . GBR
+        public string iso { get; set; }     // iso3 - IRL . GBR
         [JsonProperty("port_city")]
         public bool Port { get; set; }          // true or false
         [JsonProperty("turnaround")]
