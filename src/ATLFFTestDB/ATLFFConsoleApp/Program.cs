@@ -4,57 +4,69 @@ using Neo4jClient.Cypher;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ATLFFConsoleApp
 {
-    class Program : IEnumerable
+    class Program
     {
         static void Main(string[] args)
         {
-
-          
-
-           // var client = new BoltGraphClient("bolt://atlasff.ovh:7687", "neo4j", "Vrabierobert75##");
-           // client.Connect();
-
-           // var cities = client.Cypher
-           //.Match("(city:city)")
-           //.Return(city => city.As<City>())
-           //.Results;
-
-           // foreach (var item in cities)
-           // {
-           //     Console.WriteLine($"\nCity: {item.Name}, - {item.Latitude} - {item.Longitude}");
-           // }
-
-            RunAsync().GetAwaiter().GetResult();
- 
+            ListOfNodesRunAsync().GetAwaiter().GetResult();
+            CitiesConectedByShipAsync().GetAwaiter().GetResult();
+            ShortestPathRunAsync().GetAwaiter().GetResult();
             Console.ReadLine();
         }
 
-        public static async Task RunAsync()
+        public static async Task ListOfNodesRunAsync()
         {
             // binary connection to BD
             var client = new BoltGraphClient("bolt://atlasff.ovh:7687", "neo4j", "");
+            client.Connect();
 
-            // web intreface connection
-            //GraphClient client = new GraphClient(new Uri("http://atlasff.ovh:7474/db/data"), "neo4j", "");
+            var cities = client.Cypher
+           .Match("(city:city)")
+           .Return(city => city.As<City>())
+           .Results;
+
+            Console.WriteLine($"\nList of Nodes:");
+
+            foreach (var item in cities)
+            {
+                Console.WriteLine($"\nCity: {item.Name}, - {item.Latitude} - {item.Longitude}");
+            }
+
+        }
+
+        public static async Task CitiesConectedByShipAsync()
+        {
+            // binary connection to BD
+            var client = new BoltGraphClient("bolt://atlasff.ovh:7687", "neo4j", "");
             client.Connect();
 
             // Cities connected by SHIP
-            //var cities_conected_by_ship = client.Cypher
-            //                            .Match("(a:city)-[r:SHIP]-(b)")
-            //                            .With("a, COUNT(r) AS count")
-            //                            .Return((a) => a.As<City>())
-            //                            .Results;
+            var cities_conected_by_ship = client.Cypher
+                                        .Match("(a:city)-[r:SHIP]-(b)")
+                                        .With("a, COUNT(r) AS count")
+                                        .Return((a) => a.As<City>())
+                                        .Results;
 
-            //Console.WriteLine($"\nCities connected by SHIP:-\n");
+            Console.WriteLine($"\n\n\nCities connected by SHIP:");
 
-            //foreach (var item in cities_conected_by_ship)
-            //{
-            //    Console.WriteLine($"\nCity: {item.Name}, - {item.Latitude}/{item.Longitude} - Overhead: - {item.Turnaround}");
-            //}
+            foreach (var item in cities_conected_by_ship)
+            {
+                Console.WriteLine($"City: {item.Name}, - {item.Latitude}/{item.Longitude} - Overhead: - {item.Turnaround}");
+            }
+        }
+
+        public static async Task ShortestPathRunAsync()
+        {
+            // web intreface connection
+            //GraphClient client = new GraphClient(new Uri("http://atlasff.ovh:7474/db/data"), "neo4j", "");
+            // binary connection to BD
+            var client = new BoltGraphClient("bolt://atlasff.ovh:7687", "neo4j", "");
+            client.Connect();
 
             // Shortest path from Limerick To Liverpool 
             var query = client.Cypher
@@ -65,18 +77,16 @@ namespace ATLFFConsoleApp
 
             var result = query.Results;
 
+            Console.WriteLine($"\n\n\nShortest Path from Limerick to Liverpool: ");
+
             foreach (var value in result)
             {
-                Console.WriteLine(value);  //Limerick - Dublin - Dundalk - Belfast - Glasgow - Liverpool
+                foreach (var item in value)
+                {
+                    Console.WriteLine($"\n {item}");  //Limerick - Dublin - Dundalk - Belfast - Glasgow - Liverpool
+                }
             }
-
-         
-
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return null;
         }
     }
 }
+
