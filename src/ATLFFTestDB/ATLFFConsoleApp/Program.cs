@@ -13,22 +13,22 @@ namespace ATLFFConsoleApp
     {
         static void Main(string[] args)
         {
-            ListOfNodesRunAsync().GetAwaiter().GetResult();
+            ListOfCitiesRunAsync().GetAwaiter().GetResult();
             CitiesConectedByShipAsync().GetAwaiter().GetResult();
             ShortestPathRunAsync().GetAwaiter().GetResult();
             Console.ReadLine();
         }
 
-        public static async Task ListOfNodesRunAsync()
+        public static async Task ListOfCitiesRunAsync()
         {
             // binary connection to BD
             var client = new BoltGraphClient("bolt://atlasff.ovh:7687", "neo4j", "");
             client.Connect();
 
             var cities = client.Cypher
-           .Match("(city:city)")
-           .Return(city => city.As<City>())
-           .Results;
+                       .Match("(city:city)")
+                       .Return(city => city.As<City>())
+                       .Results;
 
             Console.WriteLine($"\nList of Nodes:");
 
@@ -36,7 +36,7 @@ namespace ATLFFConsoleApp
             {
                 Console.WriteLine($"\nCity: {item.Name}, - {item.Latitude} - {item.Longitude}");
             }
-
+            await Task.Delay(0);
         }
 
         public static async Task CitiesConectedByShipAsync()
@@ -58,6 +58,7 @@ namespace ATLFFConsoleApp
             {
                 Console.WriteLine($"City: {item.Name}, - {item.Latitude}/{item.Longitude} - Overhead: - {item.Turnaround}");
             }
+            await Task.Delay(0);
         }
 
         public static async Task ShortestPathRunAsync()
@@ -70,10 +71,10 @@ namespace ATLFFConsoleApp
 
             // Shortest path from Limerick To Liverpool 
             var query = client.Cypher
-            .Match("path = shortestPath((a:city)-[:TRUCK*]-(b:city))")
-            .Where((City a) => a.Name == "Limerick")
-            .AndWhere((City b) => b.Name == "Liverpool")
-            .Return(() => Return.As<IEnumerable<string>>("[n IN nodes(path) | n.name]"));
+                        .Match("path = shortestPath((a:city)-[:TRUCK*]-(b:city))")
+                        .Where((City a) => a.Name == "Limerick")
+                        .AndWhere((City b) => b.Name == "Liverpool")
+                        .Return(() => Return.As<IEnumerable<string>>("[n IN nodes(path) | n.name]"));
 
             var result = query.Results;
 
@@ -86,6 +87,8 @@ namespace ATLFFConsoleApp
                     Console.WriteLine($"\n {item}");  //Limerick - Dublin - Dundalk - Belfast - Glasgow - Liverpool
                 }
             }
+
+            await Task.Delay(0);
         }
     }
 }
