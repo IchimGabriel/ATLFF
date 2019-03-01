@@ -3,21 +3,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using ATLFFApp.API.Data;
 using ATLFFApp.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATLFFApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Roles = "admin")]
     public class AddressController : ControllerBase
     {
-        ShipmentContext db;
+        private ShipmentContext db;
 
         public AddressController(ShipmentContext context)
         {
             db = context;
         }
-        // GET: api/Address
+        
+        /// <summary>
+        /// GET: api/Address
+        /// </summary>
+        /// <returns>List of Addresses in DB</returns>
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
@@ -26,14 +32,24 @@ namespace ATLFFApp.API.Controllers
             return Ok(addresses);
         }
 
-        // GET: api/Address/5
+
+        /// <summary>
+        /// GET: api/Address/6747c5d9-e476-4e0e-831a-63c0bd747d7c
+        /// </summary>
+        /// <param name="id">GUID</param>
+        /// <returns>An Address with the request GUID</returns>
         [HttpGet("{id}", Name = "Get")]
         public Address Get(Guid id)
         {
             return db.Addresses.FirstOrDefault(x => x.Address_Id.Equals(id));
         }
 
-        // POST: api/Address
+        
+        /// <summary>
+        /// POST: api/Address
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns>POST a new Address</returns>
         [HttpPost]
         public IActionResult Post([FromBody] Address address)
         {
@@ -50,7 +66,13 @@ namespace ATLFFApp.API.Controllers
             return Ok();
         }
 
-        // PUT: api/Address/5
+        
+        /// <summary>
+        /// PUT: api/Address/6747c5d9-e476-4e0e-831a-63c0bd747d7c
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="address"></param>
+        /// <returns>Update an Address</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, [FromBody] Address address)
         {
@@ -72,7 +94,12 @@ namespace ATLFFApp.API.Controllers
 
         }
 
-        // DELETE: api/ApiWithActions/5
+        
+        /// <summary>
+        /// DELETE: api/ApiWithActions/6747c5d9-e476-4e0e-831a-63c0bd747d7c
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Remove the record with id = 6747c5d9-e476-4e0e-831a-63c0bd747d7c</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {

@@ -23,7 +23,6 @@ namespace ATLFFApp.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //var connection = @"Server=(localdb)\mssqllocaldb;Database=Shipment.AspNetCore;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ShipmentContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(options => options.SwaggerDoc("v1", new Info { Title = "Advanced Transport and Logistics – Freight Forwarding (ATL-FF)", Version = "v1" })
