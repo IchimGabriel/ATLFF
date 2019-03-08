@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace ATLFFApp.API.Models
+namespace ATLFFApp.API.Models.Neo4j
 {
-    public class Edge
+    public class Edge : IEdge
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -14,5 +14,9 @@ namespace ATLFFApp.API.Models
         public int Speed { get; set; }      // Km/h
         [JsonProperty("cotwo")]
         public float Emission { get; set; } // CO2 emission
+
+        public City DepartureCity { get; }
+        public City ArrivalCity { get; }
+
     }
 }

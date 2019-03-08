@@ -56,7 +56,7 @@ namespace ATLFFConsoleApp
 
             foreach (var item in cities_conected_by_ship)
             {
-                Console.WriteLine($"City: {item.Name}, - {item.Latitude}/{item.Longitude} - Overhead: - {item.Turnaround}");
+                Console.WriteLine($"Id: {item.Id}, - City: {item.Name}, - {item.Latitude}/{item.Longitude} - Overhead: - {item.Turnaround}");
             }
             await Task.Delay(0);
         }

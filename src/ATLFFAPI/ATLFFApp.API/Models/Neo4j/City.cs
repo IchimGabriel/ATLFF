@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ATLFFApp.API.Models
+namespace ATLFFApp.API.Models.Neo4j
 {
-    public class City
+    public class City : ICity
     {
-        //[JsonProperty("id")]
-        public int Id { get; set; }
-        //[JsonProperty("name")]
+        [JsonProperty("id")]
+        public Guid Id { get; set; }
+        [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("lat")]
         public float Latitude { get; set; }
