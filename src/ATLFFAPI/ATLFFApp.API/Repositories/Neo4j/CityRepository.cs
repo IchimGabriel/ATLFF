@@ -70,18 +70,36 @@ namespace ATLFFApp.API.Repositories.Neo4j
                 var shortestPath = session.ReadTransaction(tx => tx
                 .Run("MATCH p = (a:city {name: 'Tralee'})-[r:TRUCK*1..7]-(b:city {name: 'Liverpool'})" +
                                 $" RETURN extract(n IN nodes(p) | n.name) AS Cities," +
-                                $" extract(r IN relationships(p) | r.distance) AS TravelTime" + 
-                                $" ORDER BY TravelTime ASC"));
+                                $" extract(r IN relationships(p) | r.distance) AS TravelDistance" + 
+                                $" ORDER BY TravelDistance ASC"));
                 
                 return shortestPath;
             }
             catch (Exception e) { throw new SystemException(e.Message); }
             finally { await session.CloseAsync(); }
 
-            //MATCH p = (a: city { name: 'Tralee'})-[r: TRUCK * 1..6] - (b: city { name: 'Liverpool'})" +
-            //                    $" RETURN extract(n IN nodes(p) | n.name) AS Cities," +
-            //                    $" reduce(distance = 0, r in relationships(p) | distance + r.distance) AS TravelTime" +
-            //                    $" ORDER BY TravelTime ASC"));
+        }
+
+        /// <summary>
+        /// Query - SHORTEST PATH BETWEEN TWO CITY
+        /// </summary>
+        /// <returns>Travel Nodes and total travel distance - KM </returns>
+        public async Task<IEnumerable<IRecord>> FindSPathAsync(string departureC, string arrivalC, string relation, int nrnodes)
+        {
+            var session = db.Driver.Session();
+            try
+            {
+                var shortestPath = session.ReadTransaction(tx => tx
+                .Run("MATCH p = (a:city {name:'" + departureC + "'})-[r:" + relation + "*1.." + nrnodes + "]-(b:city {name:'" + arrivalC + "'})" +
+                                $" RETURN extract(n IN nodes(p) | n.name) AS Cities," +
+                                $" reduce(distance = 0, r IN relationships(p) | distance + r.distance) AS TravelDistance" +
+                                $" ORDER BY TravelDistance ASC"));
+
+                return shortestPath;
+            }
+            catch (Exception e) { throw new SystemException(e.Message); }
+            finally { await session.CloseAsync(); }
+
         }
     }
 }

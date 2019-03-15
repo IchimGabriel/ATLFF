@@ -29,8 +29,7 @@ namespace ATLFFApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetConnectedCities()
         {
-            var req = db.TruckConnectedCityNeighbours();
-            await Task.Delay(0);
+            var req = await db.TruckConnectedCityNeighbours();
             return Ok(req);
         }
 
@@ -42,8 +41,24 @@ namespace ATLFFApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShortesrPath() 
         {
-            await Task.Delay(0);
-            return Ok(db.FindShortestPathAsync());
+            var result = await db.FindShortestPathAsync();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Shortest Path using params
+        /// </summary>
+        /// <param name="departure">Dublin, Tralee</param>
+        /// <param name="arrival">Liverpool</param>
+        /// <param name="medium">TRUCK / TRAIN / SHIP / BARGE</param>
+        /// <param name="nrnodes"> int - e.g. 7 </param>
+        /// <returns> List of Shortest Paths between cities</returns>
+        [Route("/api/spath/{departure}/{arrival}/{medium}/{nrnodes}")]
+        [HttpGet]
+        public async Task<IActionResult> GetSPath(string departure, string arrival, string medium, int nrnodes)
+        {
+            var result = await db.FindSPathAsync(departure, arrival, medium, nrnodes);
+            return Ok(result);
         }
 
     }
