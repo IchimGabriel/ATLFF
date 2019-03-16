@@ -2,7 +2,7 @@
 
 namespace ATLFFApp.API.Models.Neo4j
 {
-    public class Edge : IEdge
+    public class Edge 
     {
         [JsonProperty("id")]
         public int Id { get; set; }

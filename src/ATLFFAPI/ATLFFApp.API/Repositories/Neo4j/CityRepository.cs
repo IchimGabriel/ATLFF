@@ -81,7 +81,7 @@ namespace ATLFFApp.API.Repositories.Neo4j
         }
 
         /// <summary>
-        /// Query - SHORTEST PATH BETWEEN TWO CITY
+        /// Query - SHORTEST PATH BETWEEN TWO CITIES
         /// </summary>
         /// <returns>Travel Nodes and total travel distance - KM </returns>
         public async Task<IEnumerable<IRecord>> FindSPathAsync(string departureC, string arrivalC, string relation, int nrnodes)
