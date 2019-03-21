@@ -34,7 +34,7 @@ namespace ATLFFApp.API.Controllers
         }
 
         /// <summary>
-        /// Shortest Path from a city to city
+        /// Shortest Path from a city to city - hard coded cities for test
         /// </summary>
         /// <returns></returns>
         [Route("/api/shortpath")]

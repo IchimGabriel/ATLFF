@@ -13,6 +13,6 @@ namespace ATLFFApp.API.Repositories
         Task<IEnumerable<City>> GetAllCities();
         Task<IEnumerable<IRecord>> FindShortestPathAsync();
         Task<IEnumerable<IRecord>> TruckConnectedCityNeighbours();
-        Task<IEnumerable<IRecord>> FindSPathAsync(string departureC, string arrivalC, string relation, int nrnodes);
-    }
+        Task<IEnumerable<IRecord>> FindSPathAsync(string departureCity, string arrivalCity, string relation, int noNodes);
+    } 
 }

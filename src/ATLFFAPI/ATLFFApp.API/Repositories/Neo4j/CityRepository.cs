@@ -44,10 +44,10 @@ namespace ATLFFApp.API.Repositories.Neo4j
             var session = db.Driver.Session();
             try
             {
-                var cityNeighbours = session.ReadTransaction(tx => tx
+                var result = session.ReadTransaction(tx => tx
                 .Run("MATCH (a:city)-[:TRUCK]-(b:city) RETURN a.name AS Node, b.name AS Neighbour ORDER BY a.name ASC"));
 
-                return cityNeighbours;   
+                return result;   
             }
             catch (Exception e) { throw new SystemException(e.Message); }
             finally
@@ -67,13 +67,13 @@ namespace ATLFFApp.API.Repositories.Neo4j
             var session = db.Driver.Session();
             try
             {
-                var shortestPath = session.ReadTransaction(tx => tx
+                var result = session.ReadTransaction(tx => tx
                 .Run("MATCH p = (a:city {name: 'Tralee'})-[r:TRUCK*1..7]-(b:city {name: 'Liverpool'})" +
                                 $" RETURN extract(n IN nodes(p) | n.name) AS Cities," +
                                 $" extract(r IN relationships(p) | r.distance) AS TravelDistance" + 
                                 $" ORDER BY TravelDistance ASC"));
                 
-                return shortestPath;
+                return result;
             }
             catch (Exception e) { throw new SystemException(e.Message); }
             finally { await session.CloseAsync(); }
@@ -84,18 +84,18 @@ namespace ATLFFApp.API.Repositories.Neo4j
         /// Query - SHORTEST PATH BETWEEN TWO CITIES
         /// </summary>
         /// <returns>Travel Nodes and total travel distance - KM </returns>
-        public async Task<IEnumerable<IRecord>> FindSPathAsync(string departureC, string arrivalC, string relation, int nrnodes)
+        public async Task<IEnumerable<IRecord>> FindSPathAsync(string departureCity, string arrivalCity, string relation, int noNodes)
         {
             var session = db.Driver.Session();
             try
             {
-                var shortestPath = session.ReadTransaction(tx => tx
-                .Run("MATCH p = (a:city {name:'" + departureC + "'})-[r:" + relation + "*1.." + nrnodes + "]-(b:city {name:'" + arrivalC + "'})" +
-                                $" RETURN extract(n IN nodes(p) | n.name) AS Cities," +
-                                $" reduce(distance = 0, r IN relationships(p) | distance + r.distance) AS TravelDistance" +
-                                $" ORDER BY TravelDistance ASC"));
+                var result = session.ReadTransaction(tx => tx
+                .Run("MATCH p = (a:city {name:'" + departureCity + "'})-[r:" + relation + "*1.." + noNodes + "]-(b:city {name:'" + arrivalCity + "'})" +
+                                " RETURN extract(n IN nodes(p) | n.name) AS Cities," +
+                                " reduce(distance = 0, r IN relationships(p) | distance + r.distance) AS TravelDistance" +
+                                " ORDER BY TravelDistance ASC"));
 
-                return shortestPath;
+                return result;
             }
             catch (Exception e) { throw new SystemException(e.Message); }
             finally { await session.CloseAsync(); }

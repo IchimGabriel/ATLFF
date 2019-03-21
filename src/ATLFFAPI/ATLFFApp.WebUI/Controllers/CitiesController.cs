@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ATLFFApp.WebUI.Data;
-using ATLFFApp.WebUI.Models;
 using ATLFFApp.WebUI.Services;
+using System;
+using ATLFFApp.WebUI.Models;
 
 namespace ATLFFApp.WebUI.Controllers
 {
@@ -51,28 +46,29 @@ namespace ATLFFApp.WebUI.Controllers
         //    return View(city);
         //}
 
-        //// GET: Cities/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Cities/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Cities/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,Latitude,Longitude,iso,Port,Turnaround")] City city)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        city.Id = Guid.NewGuid();
-        //        _context.Add(city);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(city);
-        //}
+        // POST: Cities/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Latitude,Longitude,iso,Port,Turnaround")] City city)
+        {
+            if (ModelState.IsValid)
+            {
+                city.Id = Guid.NewGuid();
+               
+                //_client.Add(city);
+                //await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(city);
+        }
 
         //// GET: Cities/Edit/5
         //public async Task<IActionResult> Edit(Guid? id)
