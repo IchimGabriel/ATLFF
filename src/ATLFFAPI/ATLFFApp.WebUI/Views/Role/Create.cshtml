@@ -1,0 +1,21 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <h6> Enter Role Name</h6>
+
+        <div class="form-actions no-color">
+            @Html.EditorFor(m => m.Name)
+            <input type="submit" value="Create Role" />
+        </div>
+    }
+</div>
