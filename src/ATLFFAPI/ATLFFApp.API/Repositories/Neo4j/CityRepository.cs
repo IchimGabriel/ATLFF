@@ -61,7 +61,7 @@ namespace ATLFFApp.API.Repositories.Neo4j
         /// <summary>
         /// Query - SHORTEST PATH BETWEEN TWO CITY
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Test</returns>
         public async Task<IEnumerable<IRecord>> FindShortestPathAsync()
         {
             var session = db.Driver.Session();

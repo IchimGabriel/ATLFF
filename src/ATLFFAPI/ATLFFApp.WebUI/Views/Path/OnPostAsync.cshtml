@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ShortestPath>
+@{
+    ViewData["Title"] = "OnPostAsync";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Routes</h1>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <br />
+        <h5>Cities:</h5>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            @foreach (var itemv in item.Values.Cities)
+            {
+                <ul class="navbar-nav style=' padding: .5rem;'">
+                    <li class="nav-item">
+                        @itemv &nbsp; / &nbsp;
+                    </li>
+                </ul>
+            }
+        </nav>
+        <br />
+        <h6>Distance Traveled:</h6>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            
+                <ul class="navbar-nav style=' padding: .5rem;'">
+                    <li class="nav-item">
+                        @item.Values.TravelDistance  Km
+                    </li>
+                </ul>
+            
+            </nav>
+        <br />
+    }
+</div>
+
