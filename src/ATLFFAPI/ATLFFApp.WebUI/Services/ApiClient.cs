@@ -15,6 +15,7 @@ namespace ATLFFApp.WebUI.Services
     {
         Task<List<City>> GetAllCitiesAsync();
         Task<List<ShortestPath>> GetSPath(string departure, string arrival, string medium, int nrnodes);
+        Task<IEnumerable<Neighbours>> TruckConnectedCityNeighbours();
 
     }
 
@@ -28,12 +29,12 @@ namespace ATLFFApp.WebUI.Services
         }
 
         /// <summary>
-        /// GET: 
+        /// GET: All Nodes
         /// </summary>
         /// <returns>RETURN ALL CITIES IN NEO4J DB</returns>
         public async Task<List<City>> GetAllCitiesAsync()
         {
-            var response = await _HttpClient.GetAsync("/api/City");
+            var response = await _HttpClient.GetAsync("/api/city");
 
             response.EnsureSuccessStatusCode();
 
@@ -41,7 +42,7 @@ namespace ATLFFApp.WebUI.Services
         }
 
         /// <summary>
-        /// 
+        /// Get: Option Route 
         /// </summary>
         /// <param name="departure"></param>
         /// <param name="arrival"></param>
@@ -55,6 +56,19 @@ namespace ATLFFApp.WebUI.Services
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadAsJsonAsync<List<ShortestPath>>();
+        }
+
+        /// <summary>
+        /// GET: All cities connected by TRUCK
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Neighbours>> TruckConnectedCityNeighbours()
+        {
+            var response = await _HttpClient.GetAsync("/api/neighbours");
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsJsonAsync<IEnumerable<Neighbours>>();
         }
     }
 }

@@ -5,18 +5,20 @@ using ATLFFApp.WebUI.Services;
 using ATLFFApp.WebUI.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ATLFFApp.WebUI.Controllers
 {
     public class PathController : Controller
     {
         private readonly IApiClient _client;
-        //private readonly ILogger<ShortestPathRequestModel> _logger;
+        private readonly ILogger<ShortestPathRequestModel> _logger;
 
         public PathController(IApiClient client, ILogger<ShortestPathRequestModel> logger)
         {
             _client = client;
-           // _logger = logger;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -25,16 +27,31 @@ namespace ATLFFApp.WebUI.Controllers
         [TempData]
         public string ErrorMessage { get; set; }
 
-       [HttpGet]
-        public async Task<IActionResult> OnGetAsync()
+        /// <summary>
+        /// Imput Query params
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult OnGet()
         {
+            //_logger.LogInformation("Input params...");
+
+            IList<string> MediaList = new List<string> { "TRUCK", "TRAIN", "SHIP", "BARGE" };
+            ViewBag.Media = new SelectList(MediaList);
+
             return View();
         }
 
+        /// <summary>
+        /// Display selection of routes
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> OnPostAsync()
         {
-            var result = await _client.GetSPath(Input.DepartureCity, Input.ArrivalCity, Input.Medium, Input.NoNodes);
+            var result = await _client.GetSPath(Input.DepartureCity, Input.ArrivalCity, Input.Media, Input.NoNodes);
+
+            ViewBag.Media = Input.Media.ToLower();
   
             return View(result);
         }

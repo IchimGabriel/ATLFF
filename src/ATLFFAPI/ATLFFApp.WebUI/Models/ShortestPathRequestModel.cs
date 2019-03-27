@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATLFFApp.WebUI.Models
 {
+   
     public class ShortestPathRequestModel
     {
         [Required]
@@ -17,12 +18,11 @@ namespace ATLFFApp.WebUI.Models
         public string ArrivalCity { get; set; }
 
         [Required]
-        [Display(Name = "Medium (TRUCK / TRAIN / SHIP / BARGE)")]
-        public string Medium { get; set; }          //  TRUCK / TRAIN / SHIP / BARGE
+        [Display(Name = "Media (TRUCK / TRAIN / SHIP / BARGE)")]
+        public string Media { get; set; }          //  TRUCK / TRAIN / SHIP / BARGE 
 
         [Required]
         [Display(Name = "Number of Cities Transit (Int)")]
         public int NoNodes { get; set; }
-
     }
 }

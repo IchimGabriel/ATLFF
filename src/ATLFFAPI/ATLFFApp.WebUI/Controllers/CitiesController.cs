@@ -26,8 +26,12 @@ namespace ATLFFApp.WebUI.Controllers
             return View(cities);
         }
 
-
-
+        [HttpGet]
+        public async Task<IActionResult> GetNeighbours()
+        {
+            var cities = await _client.TruckConnectedCityNeighbours();
+            return View(cities);
+        }
         //// GET: Cities/Details/5
         //public async Task<IActionResult> Details(Guid? id)
         //{
@@ -57,12 +61,12 @@ namespace ATLFFApp.WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Latitude,Longitude,iso,Port,Turnaround")] City city)
+        public IActionResult Create([Bind("Id,Name,Latitude,Longitude,iso,Port,Turnaround")] City city)
         {
             if (ModelState.IsValid)
             {
                 city.Id = Guid.NewGuid();
-               
+
                 //_client.Add(city);
                 //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

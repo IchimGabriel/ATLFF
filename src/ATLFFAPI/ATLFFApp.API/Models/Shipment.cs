@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ATLFFApp.API.Models
 {
-    public enum Statuses { VALID, DELIVERED, TRANSIT, FAILURE, RETURNED }
+    public enum Statuses { VALID, DELIVERED, TRANSIT, FAILURE, RETURNED, CANCELED }
 
     public class Shipment
     {
@@ -21,7 +21,7 @@ namespace ATLFFApp.API.Models
         public decimal Total_Price { get; set; }
         public Guid Route_Id { get; set; } 
 
-        public ICollection<Message> Meessages { get; set; }
+        public ICollection<Message> Messages { get; set; }
         public ICollection<Detail> Details { get; set; }
     }
 }

@@ -41,7 +41,6 @@ namespace ATLFFApp.WebUI.Controllers
             //{
             //    return RedirectToAction("Index", "Home");
             //}
-
             var Role = new IdentityRole();
             return View(Role);
         }

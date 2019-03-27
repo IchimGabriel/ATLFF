@@ -11,6 +11,7 @@ using Neo4jClient;
 
 namespace ATLFFApp.API.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class PathController : ControllerBase
@@ -26,6 +27,7 @@ namespace ATLFFApp.API.Controllers
         /// Conected Cities - neighbours
         /// </summary>
         /// <returns></returns>
+        [Route("/api/neighbours")]
         [HttpGet]
         public async Task<IActionResult> GetConnectedCities()
         {

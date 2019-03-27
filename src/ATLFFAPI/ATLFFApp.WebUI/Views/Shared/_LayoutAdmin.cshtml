@@ -14,12 +14,13 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
+    
     <!-- Custom fonts for this template-->
-    <link rel="stylesheet" type="text/css" href="~/vendor/fontawesome-free/css/all.min.css" >
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" >
+    <link rel="stylesheet" type="text/css" href="~/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 
     <!-- Custom styles for this template-->
-    <link rel="stylesheet" href="~/css/sb-admin-2.min.css" >
+    <link rel="stylesheet" href="~/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body id="page-top">
@@ -64,8 +65,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"></h6>
                         <a class="collapse-item" asp-area="" asp-controller="Cities" asp-action="Index">List All</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Home" asp-action="Index">Neighbours</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Path" asp-action="OnGetAsync">Request Route</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Cities" asp-action="GetNeighbours">Neighbours</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Path" asp-action="OnGet">Request Route</a>
                     </div>
                 </div>
             </li>
@@ -244,6 +245,7 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
+
     <!-- Core plugin JavaScript-->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -251,12 +253,26 @@
     <script src="~/js/sb-admin-2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Page level plugins -->
-    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=[]' async defer></script>
+    <script type='text/javascript'>
+        function GetMap() {
+            var map = new Microsoft.Maps.Map('#myMap', {
+                credentials: '',
+                center: new Microsoft.Maps.Location(51.50632, -0.12714),
+                
+                mapTypeId: Microsoft.Maps.MapTypeId.grayscale,
+                zoom: 5
+            });
+
+            //Add your post map load code here.
+        }
+    </script>
+        < !--Page level plugins-- >
+            <script src="~/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="~/js/chart-area-demo.js"></script>
-    <script src="~/js/chart-pie-demo.js"></script>
+    @*<script src="~/js/chart-area-demo.js"></script>
+        <script src="~/js/chart-pie-demo.js"></script>*@
 
     @RenderSection("Scripts", required: false)
 </body>
