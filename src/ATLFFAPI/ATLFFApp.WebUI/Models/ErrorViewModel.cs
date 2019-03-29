@@ -1,5 +1,3 @@
-using System;
-
 namespace ATLFFApp.WebUI.Models
 {
     public class ErrorViewModel

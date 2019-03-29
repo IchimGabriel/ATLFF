@@ -1,8 +1,5 @@
 ﻿using ATLFFApp.WebUI.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -46,12 +43,12 @@ namespace ATLFFApp.WebUI.Services
         /// </summary>
         /// <param name="departure"></param>
         /// <param name="arrival"></param>
-        /// <param name="medium"></param>
+        /// <param name="media"></param>
         /// <param name="nrnodes"></param>
         /// <returns></returns>
-        public async Task<List<ShortestPath>> GetSPath(string departure, string arrival, string medium, int nrnodes)
+        public async Task<List<ShortestPath>> GetSPath(string departure, string arrival, string media, int nrnodes)
         {
-            var response = await _HttpClient.GetAsync("/api/spath/" + departure + "/" + arrival + "/" + medium + "/" + nrnodes);
+            var response = await _HttpClient.GetAsync("/api/spath/" + departure + "/" + arrival + "/" + media + "/" + nrnodes);
 
             response.EnsureSuccessStatusCode();
 

@@ -1,11 +1,4 @@
-﻿using System;
-using ATLFFApp.WebUI.Data;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Hosting;
 
 [assembly: HostingStartup(typeof(ATLFFApp.WebUI.Areas.Identity.IdentityHostingStartup))]
 namespace ATLFFApp.WebUI.Areas.Identity

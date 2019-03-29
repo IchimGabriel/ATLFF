@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ATLFFApp.WebUI.Services;
 using ATLFFApp.WebUI.Models;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;

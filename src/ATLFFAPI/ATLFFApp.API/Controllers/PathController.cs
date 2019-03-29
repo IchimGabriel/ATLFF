@@ -24,18 +24,6 @@ namespace ATLFFApp.API.Controllers
         }
 
         /// <summary>
-        /// Conected Cities - neighbours
-        /// </summary>
-        /// <returns></returns>
-        [Route("/api/neighbours")]
-        [HttpGet]
-        public async Task<IActionResult> GetConnectedCities()
-        {
-            var req = await db.TruckConnectedCityNeighbours();
-            return Ok(req);
-        }
-
-        /// <summary>
         /// Shortest Path from a city to city - hard coded cities for test
         /// </summary>
         /// <returns></returns>
@@ -52,14 +40,14 @@ namespace ATLFFApp.API.Controllers
         /// </summary>
         /// <param name="departure">Dublin, Tralee</param>
         /// <param name="arrival">Liverpool</param>
-        /// <param name="medium">TRUCK / TRAIN / SHIP / BARGE</param>
+        /// <param name="media">TRUCK / TRAIN / SHIP / BARGE</param>
         /// <param name="nrnodes"> int - e.g. 7 </param>
         /// <returns> List of Shortest Paths between cities</returns>
-        [Route("/api/spath/{departure}/{arrival}/{medium}/{nrnodes}")]
+        [Route("/api/spath/{departure}/{arrival}/{media}/{nrnodes}")]
         [HttpGet]
-        public async Task<IActionResult> GetSPath(string departure, string arrival, string medium, int nrnodes)
+        public async Task<IActionResult> GetSPath(string departure, string arrival, string media, int nrnodes)
         {
-            var result = await db.FindSPathAsync(departure, arrival, medium, nrnodes);
+            var result = await db.FindSPathAsync(departure, arrival, media, nrnodes);
             return Ok(result);
         }
 

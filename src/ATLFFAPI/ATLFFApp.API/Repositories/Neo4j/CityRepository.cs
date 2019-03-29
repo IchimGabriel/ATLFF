@@ -101,5 +101,53 @@ namespace ATLFFApp.API.Repositories.Neo4j
             finally { await session.CloseAsync(); }
 
         }
+
+        /// <summary>
+        /// Create New Node
+        /// </summary>
+        /// <param name="city"></param>
+        /// <param name="iso"></param>
+        /// <param name="lat"></param>
+        /// <param name="lng"></param>
+        /// <param name="is_port"></param>
+        /// <param name="turnaround"></param>
+        /// <returns></returns>
+        public async Task CreateNode(string city, string iso, float lat, float lng, bool is_port, int turnaround)
+        {
+            var session = db.Driver.Session();
+            try
+            {
+                var result = session.WriteTransaction(tx => tx
+                .Run("CREATE("+ city +": city{ name: '"+ city +"', iso: '"+ iso +"', lat: "+ lat +" , lng: "+ lng +", port_city: "+ is_port +", turnaround: "+ turnaround +"})"));
+            }
+            catch (Exception e) { throw new SystemException(e.Message); }
+            finally
+            { await session.CloseAsync(); }
+        }
+
+        /// <summary>
+        /// Create Edge between two Cities
+        /// </summary>
+        /// <param name="fromCity"></param>
+        /// <param name="toCity"></param>
+        /// <param name="media"></param>
+        /// <param name="distance"></param>
+        /// <param name="price"></param>
+        /// <param name="cotwo"></param>
+        /// <param name="speed"></param>
+        /// <returns></returns>
+        public async Task CreateEdge(string fromCity, string toCity, string media, int distance, decimal price, float cotwo, int speed)
+        {
+            var session = db.Driver.Session();
+            try
+            {
+                var result = session.WriteTransaction(tx => tx
+                .Run("MATCH (a:city), (b:city) WHERE a.name = '"+ fromCity +"' AND b.name = '"+ toCity +"' " +
+                "CREATE(a) -[r: "+ media +" { distance: "+ distance +", price: "+ price +", cotwo: "+ cotwo +", speed: "+ speed +"}]->(b)"));
+            }
+            catch (Exception e) { throw new SystemException(e.Message); }
+            finally
+            { await session.CloseAsync(); }
+        }
     }
 }
